@@ -8,26 +8,23 @@ const UserSchema = mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique:true
   },
   password: {
     type: String,
   },
-  status: {
-    type: String,
-    required: true,
-  },
-  userType: {
-    type: String,
-    required: true,
-  },
-  sponsorId: {
-    type: mongoose.ObjectId,
-    required: true,
-  },
-  createdTime: {
-    type: Date,
-    default: Date.now,
-  },
+  // status: {
+  //   type: String,
+  //   required: true,
+  // },
+  // userType: {
+  //   type: String,
+    // required: true,
+  // },
+  date:{
+    type:Date,
+    default:Date.now
+  }
 });
 
-module.exports = mongoose.model("Users", UserSchema);
+module.exports = mongoose.model("user", UserSchema);

@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const SheduleSchema = mongoose.Schema({
-  eventId:{
-        type: "String",
-        required: true
-    },
   sheduleDate: {
     type: String,
     required: true,
@@ -17,6 +13,10 @@ const SheduleSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  eventId:{
+    type: mongoose.Schema.Types.ObjectId,
+     ref:"Events"
+  }
 });
 
 module.exports = mongoose.model("Shedules", SheduleSchema);

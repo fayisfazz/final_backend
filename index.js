@@ -2,16 +2,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-
-const dbUrl = "mongodb+srv://eventive:PDEH5hhdu5jdLYr6@cluster0.gy5w1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const dotenv = require("dotenv");
   
-const connectionParams = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
+dotenv.config({path:"./.env"});
 
 mongoose
-  .connect(dbUrl, connectionParams)
+  .connect(process.env.dbUrl)
   .then(() => {
     console.info("Connected");
   })
@@ -25,15 +21,27 @@ mongoose
 const app = express();
 app.use(express.json())
 
-//Events List
+//Events List 
 const EventList = require("./src/Routes/Events")
 app.use('/eventslist',EventList)
+
+//Shedule List
+const SheduleList = require("./src/Routes/Shedules")
+app.use('/shedules',SheduleList)
+
+//Results 
+const Results = require("./src/Routes/MarkEntry")
+app.use('/results',Results)
 
 //Events Details
 const Details = require("./src/Routes/Details")
 app.use('/details',Details)
 
-app.use("/users",require("./src/Routes/Auth"));
+// app.use("/users",require("./src/Routes/Auth"));
+
+//User routes 
+const UserRoutes = require("./src/Routes/User");
+app.use("/user", UserRoutes);
 
 app.listen(3001, () => {
   console.log("server started");

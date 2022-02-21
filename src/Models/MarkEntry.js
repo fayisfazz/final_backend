@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const MarkEntrySchema = mongoose.Schema({
-  eventName: {
-    type: String,
-    required: true,
-  },
   first: {
     type: String,
     required: true,
@@ -14,6 +10,10 @@ const MarkEntrySchema = mongoose.Schema({
   },
   third: {
     type: String,
+  },
+  eventId:{
+    type: mongoose.Schema.Types.ObjectId,
+     ref:"Events"
   },
 });
 

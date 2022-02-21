@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router()
 const Event = require("../Models/Events")
 
+
 //Get all Events
 router.get('/', async(req,res) => {
     try{
@@ -44,6 +45,7 @@ router.post('/', async(req, res)=>{
 router.patch('/:id',async(req,res)=>{
     try{
         const event = await Event.findById(req.params.id)
+        if(!event) return res.send("Event Not Found");
         event.eventName = req.body.eventName
         event.gender = req.body.gender
         const e1 = await event.save()
@@ -51,6 +53,20 @@ router.patch('/:id',async(req,res)=>{
     }catch(err){
         res.send('Error' + err)
     }
+})
+
+//Delete Event By Id
+router.delete('/:id', async(req,res) => {
+    try{
+        const event = await Event.findById(req.params.id)
+        if(!event) return res.send("Event Not Found");
+        await event.delete();
+        res.send({event,message:"Deleted"});
+    }
+    catch(err){
+        res.send('Error' + err )
+    }
+    
 })
 
 module.exports = router;

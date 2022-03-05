@@ -2,8 +2,12 @@ const express = require("express");
 const router = express.Router()
 const Details = require("../Models/Details")
 
-//Get Details
-router.get('/', async(req,res) => {
+//auth utility
+const authService = require("../Services/Auth");
+
+
+//Get Details on DB
+router.get('/',authService.autheticateTheUser, async(req,res) => {
     try{
         const details = await Details.find()
         res.json(details)
@@ -15,7 +19,7 @@ router.get('/', async(req,res) => {
 })
 
 //Set Details
-router.post('/', async(req, res)=>{
+router.post('/', authService.autheticateTheUser, async(req, res)=>{
     const details = new Details({ 
         pgmName:req.body.pgmName,
         date:req.body.date,
@@ -35,7 +39,7 @@ router.post('/', async(req, res)=>{
 })
 
 //Details Update
-router.patch('/:id',async(req,res)=>{
+router.patch('/:id', authService.autheticateTheUser, async(req,res)=>{
     try{
         const details = await Details.findById(req.params.id);
         details.pgmName = req.body.pgmName

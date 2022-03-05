@@ -3,9 +3,11 @@ const router = express.Router()
 const Results = require("../Models/MarkEntry")
 // const mongodb = require("mongodb")
 
+//auth utility
+const authService = require("../Services/Auth");
 
 //Get all Results
-router.get('/', async(req,res) => {
+router.get('/', authService.autheticateTheUser,async(req,res) => {
     try{
         const result = await Results.find()
         res.json(result)
@@ -17,7 +19,7 @@ router.get('/', async(req,res) => {
 })
 
 //Get Results By Id
-router.get('/:id', async(req,res) => {
+router.get('/:id',  authService.autheticateTheUser, async(req,res) => {
     try{
         const result = await Results.findById(req.params.id)
         res.json(result)
@@ -29,7 +31,7 @@ router.get('/:id', async(req,res) => {
 })
 
 //Result Entry
-router.post('/', async(req, res)=>{
+router.post('/', authService.autheticateTheUser, async(req, res)=>{
     const result = new Results({ 
         first:req.body.first,
         second:req.body.second,
@@ -44,7 +46,7 @@ router.post('/', async(req, res)=>{
 })
 
 //Update a result
-router.patch('/:id',async(req,res)=>{
+router.patch('/:id', authService.autheticateTheUser, async(req,res)=>{
     try{
         const result = await Results.findById(req.params.id);
         if(!result) return res.send("Event Not Found");
@@ -59,7 +61,7 @@ router.patch('/:id',async(req,res)=>{
 })
 
 //Delete Result 
-router.delete('/:id', async(req,res) => {
+router.delete('/:id', authService.autheticateTheUser,async(req,res) => {
     try{
         const result = await Results.findById(req.params.id)
         if(!result) return res.send("Event Not Found");

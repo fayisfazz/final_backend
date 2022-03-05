@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router()
 const Shedule = require("../Models/Shedules")
 
+//auth utility
+const authService = require("../Services/Auth");
 
 //Get all Shedules
-router.get('/', async(req,res) => {
+router.get('/', authService.autheticateTheUser,async(req,res) => {
     try{
         const shedule = await Shedule.find()
         res.json(shedule)
@@ -16,7 +18,7 @@ router.get('/', async(req,res) => {
 })
 
 //Get Shedule By Id
-router.get('/:id', async(req,res) => {
+router.get('/:id', authService.autheticateTheUser,async(req,res) => {
     try{
         const shedule = await Shedule.findById(req.params.id)
         res.json(shedule)
@@ -28,7 +30,7 @@ router.get('/:id', async(req,res) => {
 })
 
 // Delete Shedule By Id
-router.delete('/:id', async(req,res) => {
+router.delete('/:id', authService.autheticateTheUser,async(req,res) => {
     try{
         const shedule = await Shedule.findById(req.params.id)
         if(!shedule) return res.send("Not Found");
@@ -42,7 +44,7 @@ router.delete('/:id', async(req,res) => {
 })
 
 //Shedule an event
-router.post('/', async(req, res)=>{
+router.post('/', authService.autheticateTheUser,async(req, res)=>{
     const shedule = new Shedule({ 
         eventName:req.body.eventName,
         sheduleDate:req.body.sheduleDate,
@@ -58,7 +60,7 @@ router.post('/', async(req, res)=>{
 })
 
 //Update a shedule
-router.patch('/:id',async(req,res)=>{
+router.patch('/:id', authService.autheticateTheUser,async(req,res)=>{
     try{
         const shedule = await Shedule.findById(req.params.id)
         if(!shedule) return res.send("Not Found");

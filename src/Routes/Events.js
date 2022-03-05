@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router()
 const Event = require("../Models/Events")
 
+//auth utility
+const authService = require("../Services/Auth");
 
 //Get all Events
-router.get('/', async(req,res) => {
+router.get('/', authService.autheticateTheUser, async(req,res) => {
     try{
         const events = await Event.find()
         res.json(events)
@@ -16,7 +18,7 @@ router.get('/', async(req,res) => {
 })
 
 //Get Event By Id
-router.get('/:id', async(req,res) => {
+router.get('/:id', authService.autheticateTheUser, async(req,res) => {
     try{
         const event = await Event.findById(req.params.id)
         res.json(event)
@@ -28,7 +30,7 @@ router.get('/:id', async(req,res) => {
 })
 
 //Event Creation
-router.post('/', async(req, res)=>{
+router.post('/', authService.autheticateTheUser, async(req, res)=>{
     const events = new Event({ 
         eventName:req.body.eventName,
         gender:req.body.gender,
@@ -42,7 +44,7 @@ router.post('/', async(req, res)=>{
 })
 
 //Event Updation
-router.patch('/:id',async(req,res)=>{
+router.patch('/:id', authService.autheticateTheUser, async(req,res)=>{
     try{
         const event = await Event.findById(req.params.id)
         if(!event) return res.send("Event Not Found");
@@ -56,7 +58,7 @@ router.patch('/:id',async(req,res)=>{
 })
 
 //Delete Event By Id
-router.delete('/:id', async(req,res) => {
+router.delete('/:id', authService.autheticateTheUser,async(req,res) => {
     try{
         const event = await Event.findById(req.params.id)
         if(!event) return res.send("Event Not Found");

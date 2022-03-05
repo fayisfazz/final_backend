@@ -1,12 +1,12 @@
 // requiring the express methods to create custom routes
 const express = require("express");
 const router = express.Router();
-const Participant = require("../Models/UserRegister")
+const Registration = require("../Models/UserRegister")
 
 //Get all Participants
 router.get('/', async(req,res) => {
     try{
-        const participants = await Participant.find()
+        const participants = await Registration.find()
         res.json(participants)
     }
     catch(err){
@@ -17,8 +17,9 @@ router.get('/', async(req,res) => {
 
 //Get Participant By Id
 router.get('/:id', async(req,res) => {
+    {}
     try{
-        const participant = await Participant.findById(req.params.id)
+        const participant = await Registration.findById(req.params.id)
         res.json(participant)
     }
     catch(err){
@@ -28,8 +29,9 @@ router.get('/:id', async(req,res) => {
 })
 
 //Register for Program
-router.post('/', async(req, res)=>{
-    const participant = new Participant({ 
+router.post('/',
+   async(req, res)=>{
+    const participant = new Registration({ 
         candidateName:req.body.candidateName,
         year:req.body.year,
         department:req.body.department,
@@ -37,9 +39,11 @@ router.post('/', async(req, res)=>{
         gender:req.body.gender,
     })
     try{
-        const r1 = await result.save();
+        const r1 = await participant.save();
         res.json(r1);
     }catch(err){
         res.send('Error' + err )
     }
 })
+
+module.exports = router;

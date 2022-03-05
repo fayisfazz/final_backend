@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const SheduleSchema = mongoose.Schema({
+  eventId:{
+    type: mongoose.Schema.Types.ObjectId,
+     ref:"Events"
+  },
   sheduleDate: {
     type: String,
     required: true,
@@ -13,9 +17,13 @@ const SheduleSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  eventId:{
-    type: mongoose.Schema.Types.ObjectId,
-     ref:"Events"
+  isMarkEntered:{
+    type: Boolean,
+    required: true,
+  },
+  isPublished:{
+    type: Boolean,
+    required: true,
   }
 });
 

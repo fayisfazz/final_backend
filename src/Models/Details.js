@@ -33,7 +33,7 @@ const DetailsSchema = mongoose.Schema({
     {
       deptname: String,
     },
-  ]
+  ],
 });
 
 module.exports = mongoose.model("Details", DetailsSchema);

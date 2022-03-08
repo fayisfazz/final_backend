@@ -6,14 +6,11 @@ const ParticipantsDetails = mongoose.Schema({
     ref: "UserRegister",
     required: true,
   },
-  itemsId: [
-    {
-      eventId:mongoose.Schema.Types.ObjectId,
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: "Events",
-    // required: true,
-    }
-  ],
+  itemsList: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Events",
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("ParticipantsDetails", ParticipantsDetails);

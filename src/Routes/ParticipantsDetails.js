@@ -1,14 +1,13 @@
 const express = require("express");
 const router = express.Router()
-const Eventslist = require("../Models/ParticipantsDetails")
+const UserEventsList = require("../Models/ParticipantsDetails")
 
-//auth utility
-const authService = require("../Services/Auth");
+
 
 //Get all Participants names with events list on DB
-router.get('/', authService.autheticateTheUser, async(req,res) => {
+router.get('/',async(req,res) => {
     try{
-        const eventslist = await Eventslist.find()
+        const eventslist = await UserEventsList.find()
         res.json(eventslist)
     }
     catch(err){
@@ -18,9 +17,9 @@ router.get('/', authService.autheticateTheUser, async(req,res) => {
 })
 
 //Get Partcipants names with events list By Id
-router.get('/:id', authService.autheticateTheUser, async(req,res) => {
+router.get('/:id',async(req,res) => {
     try{
-        const eventlist = await Eventslist.findById(req.params.id)
+        const eventlist = await UserEventsList.findById(req.params.id)
         res.json(eventlist)
     }
     catch(err){
@@ -30,10 +29,11 @@ router.get('/:id', authService.autheticateTheUser, async(req,res) => {
 })
 
 //Post a new item or items to eventslist
-router.post('/', authService.autheticateTheUser, async(req, res)=>{
-    const eventslist = new Eventslist([{ 
-        itemslist:req.body.itemslist,
-    }])
+router.post('/',async(req, res)=>{
+    const eventslist = new UserEventsList({ 
+        candidateId:req.body.candidateId,
+        itemsId:[{eventId:req.body.eventId}]
+     })
     try{
         const e1 = await eventslist.save();
         res.json(e1);
@@ -44,9 +44,9 @@ router.post('/', authService.autheticateTheUser, async(req, res)=>{
 
 
 //Delete events list  By Id
-router.delete('/:id', authService.autheticateTheUser,async(req,res) => {
+router.delete('/:id',async(req,res) => {
     try{
-        const eventslist = await Eventslist.findById(req.params.id)
+        const eventslist = await UserEventslist.findById(req.params.id)
         if(!eventslist) return res.send("Event Not Found");
         await eventslist.delete();
         res.send({eventslist,message:"Deleted"});

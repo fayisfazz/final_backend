@@ -1,17 +1,19 @@
 const mongoose = require("mongoose");
 
-const ParticipantDetails = mongoose.modelSchema({
-  candidateName: {
-    type: mongoose.Schema.Types.String,
-    ref: "Events",
+const ParticipantsDetails = mongoose.Schema({
+  candidateId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "UserRegister",
     required: true,
   },
-  itemslist: [
+  itemsId: [
     {
-      type: String,
-      required: true,
-    },
+      eventId:mongoose.Schema.Types.ObjectId,
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: "Events",
+    // required: true,
+    }
   ],
 });
 
-module.exports = mongoose.model("ParticipantDetails", ParticipantDetails);
+module.exports = mongoose.model("ParticipantsDetails", ParticipantsDetails);

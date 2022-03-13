@@ -49,6 +49,6 @@ const ParticipantDetails = require("./src/Routes/ParticipantsDetails");
 app.use("/participantsdetails", ParticipantDetails);
 
 
-app.listen(3001 || process.env.PORT  , () => {
+app.listen( process.env.PORT || 3001  , () => {
   console.log("server started");
 });

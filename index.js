@@ -2,7 +2,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 // const dotenv = require("dotenv");
+
+app.use(cors());
 
 // dotenv.config({ path: "./.env" });
 if (process.env.NODE_ENV !== "production") {

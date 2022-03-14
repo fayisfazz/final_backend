@@ -2,10 +2,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const dotenv = require("dotenv");
+// const dotenv = require("dotenv");
 
-dotenv.config({ path: "./.env" });
-
+// dotenv.config({ path: "./.env" });
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 mongoose
   .connect(process.env.dbUrl)
   .then(() => {
@@ -48,7 +50,4 @@ app.use("/users", require("./src/Routes/Auth"));
 const ParticipantDetails = require("./src/Routes/ParticipantsDetails");
 app.use("/participantsdetails", ParticipantDetails);
 
-
-app.listen(3001, () => {
-  console.log("server started");
-});
+app.listen(process.env.PORT || 3001, () => console.log("Server started"));

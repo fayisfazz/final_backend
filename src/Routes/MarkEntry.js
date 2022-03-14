@@ -12,7 +12,6 @@ const authService = require("../Services/Auth");
 router.get("/", async (req, res) => {
   try {
     const results = await Results.find();
-   
 
     // const winners = result.map((result) => {});
     res.send(results);
@@ -35,9 +34,13 @@ router.get("/:id", async (req, res) => {
 //Result Entry
 router.post("/", async (req, res) => {
   const result = new Results({
-    first: req.body.first,
-    second: req.body.second,
-    third: req.body.third,
+    eventName: req.body.eventName,
+    first: { name: req.body.first.name, department: req.body.first.department },
+    second: {
+      name: req.body.second.name,
+      department: req.body.second.department,
+    },
+    third: { name: req.body.third.name, department: req.body.third.department },
   });
   try {
     const r1 = await result.save();
@@ -52,9 +55,12 @@ router.patch("/:id", async (req, res) => {
   try {
     const result = await Results.findById(req.params.id);
     if (!result) return res.send("Event Not Found");
-    result.first = req.body.first;
-    result.second = req.body.second;
-    result.third = req.body.third;
+    result.first = { name: req.body.first.name, department: req.body.first.department };
+    result.second ={
+      name: req.body.second.name,
+      department: req.body.second.department,
+    };
+    result.third = { name: req.body.third.name, department: req.body.third.department };
     const r1 = await result.save();
     res.json(r1);
   } catch (err) {

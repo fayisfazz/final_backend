@@ -37,10 +37,17 @@ app.use("/results", Results);
 const Details = require("./src/Routes/Details");
 app.use("/details", Details);
 
+//User Registration for Events
 const Registration = require("./src/Routes/UserRegister");
 app.use("/registration", Registration);
 
+//User Authentication
 app.use("/users", require("./src/Routes/Auth"));
+
+//Participants Details
+const ParticipantDetails = require("./src/Routes/ParticipantsDetails");
+app.use("/participantsdetails", ParticipantDetails);
+
 
 app.listen(3001, () => {
   console.log("server started");

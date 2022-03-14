@@ -1,22 +1,31 @@
 const mongoose = require("mongoose");
 
 const MarkEntrySchema = mongoose.Schema({
-  eventId:{
-    type: mongoose.Schema.Types.ObjectId,
-     ref:"Events"
+  eventName: {
+    type: mongoose.Schema.Types.String,
+    ref: "Events",
   },
   first: {
-    type:mongoose.Schema.Types.ObjectId,
-    ref:"UserRegister"
+    name:{type:String},
+    department:{
+      type:mongoose.Schema.Types.String,
+      ref:"UserRegister"
+    }
   },
   second: {
-    type :mongoose.Schema.Types.ObjectId,
-     ref:"UserRegister"
+    name:{type:String},
+    department:{
+      type:mongoose.Schema.Types.String,
+      ref:"UserRegister"
+    }
   },
   third: {
-    type :mongoose.Schema.Types.ObjectId,
-     ref:"UserRegister"
-  },
+    name:{type:String},
+    department:{
+      type:mongoose.Schema.Types.String,
+      ref:"UserRegister"
+    }
+  }
 });
 
 module.exports = mongoose.model("MarkEntry", MarkEntrySchema);

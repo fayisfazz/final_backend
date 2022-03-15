@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const cors = require("cors")
 
-app.use(cors());
 
 // dotenv.config({ path: "./.env" });
 if (process.env.NODE_ENV !== "production") {

@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
+const cors = require("cors")
 
 dotenv.config({ path: "./.env" });
 
@@ -20,6 +21,7 @@ mongoose
 // creating an instance of the express app
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 //Events List
 const EventList = require("./src/Routes/Events");
@@ -49,6 +51,6 @@ const ParticipantDetails = require("./src/Routes/ParticipantsDetails");
 app.use("/participantsdetails", ParticipantDetails);
 
 
-app.listen( process.env.PORT || 3001  , () => {
+app.listen( process.env.PORT || 3001 , () => {
   console.log("server started");
 });

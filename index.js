@@ -5,8 +5,12 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const cors = require("cors")
 
-dotenv.config({ path: "./.env" });
+app.use(cors());
 
+// dotenv.config({ path: "./.env" });
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 mongoose
   .connect(process.env.dbUrl)
   .then(() => {
@@ -50,7 +54,4 @@ app.use("/users", require("./src/Routes/Auth"));
 const ParticipantDetails = require("./src/Routes/ParticipantsDetails");
 app.use("/participantsdetails", ParticipantDetails);
 
-
-app.listen( process.env.PORT || 3001 , () => {
-  console.log("server started");
-});
+app.listen(process.env.PORT || 3001, () => console.log("Server started"));

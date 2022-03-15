@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 //Get Partcipants names with events list By Id
 router.get("/:id", async (req, res) => {
   try {
-    const eventlist = await UserEventsList.findById(req.params.id);
+    const eventlist = await UserEventsList
     res.json(eventlist);
   } catch (err) {
     res.send("Error" + err);
@@ -47,5 +47,16 @@ router.delete("/:id", async (req, res) => {
     res.send("Error" + err);
   }
 });
+
+//Get Event  names with Participants list  By using event Id
+router.get("/:id", async (req, res) => {
+  try {
+    const eventName = await UserEventsList.findById(req.params.id);
+    res.json(eventlist);
+  } catch (err) {
+    res.send("Error" + err);
+  }
+});
+
 
 module.exports = router;

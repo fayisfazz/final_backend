@@ -13,6 +13,10 @@ const DetailsSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  inuagration: {
+    type: String,
+    required: true,
+  },
   guest: {
     type: String,
     required: true,
@@ -21,19 +25,10 @@ const DetailsSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  maxNoParticipation: {
+  noOfDays: {
     type: Number,
     required: true,
   },
-  totalGroups: {
-    type: Number,
-    required: true,
-  },
-  deptDetails: [
-    {
-      deptname: String,
-    },
-  ],
 });
 
 module.exports = mongoose.model("Details", DetailsSchema);

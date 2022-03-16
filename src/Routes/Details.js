@@ -51,4 +51,16 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+//Delete Details By Id
+router.delete("/:id", async (req, res) => {
+  try {
+    const details = await Details.findById(req.params.id);
+    if (!details) return res.send("Details Not Found");
+    await details.delete();
+    res.send({ details, message: "Deleted" });
+  } catch (err) {
+    res.send("Error" + err);
+  }
+});
+
 module.exports = router;

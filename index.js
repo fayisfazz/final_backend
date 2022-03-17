@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 // const dotenv = require("dotenv");
 
-app.use(cors());
+
 
 // dotenv.config({ path: "./.env" });
 if (process.env.NODE_ENV !== "production") {
@@ -25,6 +25,7 @@ mongoose
 // creating an instance of the express app
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 //Events List
 const EventList = require("./src/Routes/Events");

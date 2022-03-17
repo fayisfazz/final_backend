@@ -12,6 +12,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+//Get Details by Id
+router.get("/:id", async (req, res) => {
+  try {
+    const details = await Details.findOne();
+    res.json(details);
+  } catch (err) {
+    res.send("Error" + err);
+  }
+});
+
 //Set Details
 router.post("/", async (req, res) => {
   const details = new Details({

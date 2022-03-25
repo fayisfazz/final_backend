@@ -43,7 +43,7 @@ router.delete("/:id", async (req, res) => {
 //Shedule an event
 router.post("/", async (req, res) => {
   const shedule = new Shedule({
-    eventId: req.body.eventId,
+    eventName: req.body.eventName,
     sheduleDate: req.body.sheduleDate,
     sheduleTime: req.body.sheduleTime,
     shedulePlace: req.body.shedulePlace,

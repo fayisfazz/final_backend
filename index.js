@@ -9,14 +9,15 @@ const cors = require("cors");
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-mongoose
+const connectDB = async () => {await mongoose
   .connect(process.env.dbUrl)
   .then(() => {
     console.info("Connected");
   })
   .catch((e) => {
-    console.error("Error", e);
-  });
+    console.error("Errore", e);
+  })};
+  connectDB();
 // importing the environmental variables
 // require("dotenv/config");
 

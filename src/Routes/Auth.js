@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const auth = require("../MiddleWares/auth");
 const { check, validationResult } = require("express-validator");
 const User = require("../Models/User");
+const authService = require("../Services/Auth");
+const userService = require("../Services/User");
 
 
 var jwtSecret = "token";
@@ -23,7 +25,7 @@ router.get("/", async (req, res) => {
 //Get user by token
 router.get("/auth", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(req.body.id).select("-password");
     res.json(user);
   } catch (err) {
     console.error(err.message);
@@ -138,7 +140,77 @@ router.post(
   }
 );
 
+//forget password
+router.post("/forgot", async (req, res) => {
+  const { username, email } = req.body;
+  //checking username
+  if (!username || !email)
+    res.status(404).send({
+      message: "forgot password credentials are not given",
+    });
+
+  //condition to fetch the user
+  const conditions = {
+    username,
+    email,
+  };
+  //To get User By certain coditions
+const getUsersBycondition = async (condition) => {
+  const users = await User.find(conditions).select({
+    password: 0,
+    __v: 0,
+    createdTime: 0,
+  });
+  return users;
+};
+  //getting all user records
+  
+  const userData = await getUsersBycondition(conditions);
+
+  if (!userData || userData.length !== 1 || userData[0].status == "created")
+    return res.status(404).send({
+      message: "invalid username or password",
+    });
+
+  //data to embed as an paylod in token
+  const userCoreData = {
+    id: userData[0]._id,
+    type: userData[0].userType,
+  };
+
+  //generating user jwt token
+ // const userToken = await authService.createNewToken(userCoreData);
+ jwt.sign(userCoreData, jwtSecret, { expiresIn: "5 days" }, (err, userToken) => {
+  if (err) throw err;
+
+  // sending back the generated token
+  res.status(201).send({
+    message: "user credential are successfully done",
+    data: {
+      userToken,
+    },
+  });
+ 
+ });
+});
 
 
+//reset password
+router.patch("/reset",auth, async (req, res) => {
+  const { password } = req.body;
+  //password is not provided
+  if (!password)
+    res.status(404).send({
+      message: "new password is not provided",
+    });
+  //encrypting the password using cryptoJs
+   //const encryptedPassword = authService.encryptPassword(password);
+   //updating the password
+   await userService.updateUser(req.body.user.id, {
+     password: password
+   });
 
+  //sending back the response
+  res.status(200).send({ message: "password successfully updated" });
+});
 module.exports = router;

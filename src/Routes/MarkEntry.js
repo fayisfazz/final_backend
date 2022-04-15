@@ -35,12 +35,12 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   const result = new Results({
     eventName: req.body.eventName,
-    first: { name: req.body.first.name, department: req.body.first.department },
-    second: {
-      name: req.body.second.name,
-      department: req.body.second.department,
-    },
-    third: { name: req.body.third.name, department: req.body.third.department },
+    first : req.body.first,
+    second: req.body.second,
+    third:req.body.third,
+    firstDept:req.body.firstDept,
+    secondDept:req.body.secondDept,
+    thirdDept:req.body.thirdDept,
   });
   try {
     const r1 = await result.save();
@@ -55,12 +55,12 @@ router.patch("/:id", async (req, res) => {
   try {
     const result = await Results.findById(req.params.id);
     if (!result) return res.send("Event Not Found");
-    result.first = { name: req.body.first.name, department: req.body.first.department };
-    result.second ={
-      name: req.body.second.name,
-      department: req.body.second.department,
-    };
-    result.third = { name: req.body.third.name, department: req.body.third.department };
+    result.first = req.body.first,
+    result.second = req.body.second,
+    result.third = req.body.third,
+    result.firstDept = req.body.firstDept,
+    result.secondDept = req.body.secondDept,
+    result.thirdDept = req.body.thirdDept
     const r1 = await result.save();
     res.json(r1);
   } catch (err) {

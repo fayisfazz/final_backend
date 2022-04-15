@@ -12,6 +12,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+//Get Details By Id
+router.get("/:id", async (req, res) => {
+  try {
+    const details = await Details.findById(req.params.id);
+    res.json(details);
+  } catch (err) {
+    res.send("Error" + err);
+  }
+});
+
 //Set Details
 router.post("/", async (req, res) => {
   const details = new Details({
@@ -19,10 +29,10 @@ router.post("/", async (req, res) => {
     date: req.body.date,
     place: req.body.place,
     guest: req.body.guest,
+    inuaguration:req.body.inuaguration,
     totalEvent: req.body.totalEvent,
-    maxNoParticipation: req.body.maxNoParticipation,
-    totalGroups: req.body.totalGroups,
-    deptDetails: req.body.deptDetails,
+    noOfDays : req.body.noOfDays,
+    isRegistrationLock : req.body.isRegistrationLock,
   });
   try {
     const d1 = await details.save();
@@ -39,11 +49,11 @@ router.patch("/:id", async (req, res) => {
     details.pgmName = req.body.pgmName;
     details.date = req.body.date;
     details.place = req.body.place;
+    details.inuaguration = req.body.inuaguration;
     details.guest = req.body.guest;
     details.totalEvent = req.body.totalEvent;
-    details.maxNoParticipation = req.body.maxNoParticipation;
-    details.totalGroups = req.body.totalGroups;
-    details.deptDetails = req.body.deptDetails;
+    details.noOfDays = req.body.noOfDays;
+    details.isRegistrationLock = req.body.isRegistrationLock;
     const d1 = await details.save();
     res.json(d1);
   } catch (err) {

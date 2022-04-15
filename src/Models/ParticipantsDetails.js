@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
 
 const ParticipantsDetails = mongoose.Schema({
-  candidateId: {
-    type: mongoose.Schema.Types.ObjectId,
+  candidateName: {
+    type: mongoose.Schema.Types.String,
     ref: "UserRegister",
     required: true,
   },
   itemsList: {
-    type: [mongoose.Schema.Types.ObjectId],
+    type: [mongoose.Schema.Types.String],
     ref: "Events",
-    default: [],
+    // default: [],
+    required:true,
   },
 });
 

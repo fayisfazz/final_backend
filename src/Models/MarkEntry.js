@@ -2,30 +2,29 @@ const mongoose = require("mongoose");
 
 const MarkEntrySchema = mongoose.Schema({
   eventName: {
-    type: mongoose.Schema.Types.String,
-    ref: "Events",
+    type: String,
+    required: true,
   },
   first: {
-    name:{type:String},
-    department:{
-      type:mongoose.Schema.Types.String,
-      ref:"UserRegister"
-    }
+    type: String,
+    required: true,
   },
   second: {
-    name:{type:String},
-    department:{
-      type:mongoose.Schema.Types.String,
-      ref:"UserRegister"
-    }
+    type: String,
   },
   third: {
-    name:{type:String},
-    department:{
-      type:mongoose.Schema.Types.String,
-      ref:"UserRegister"
-    }
-  }
+    type: String,
+  },
+  firstDept: {
+    type: String,
+    required: true,
+  },
+  secondDept: {
+    type: String,
+  },
+  thirdDept: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("MarkEntry", MarkEntrySchema);

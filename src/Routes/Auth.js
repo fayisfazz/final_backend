@@ -71,6 +71,17 @@ router.get("/auth", auth, async (req, res) => {
   }
 });
 
+//Get user by token
+router.get("/auths", async (req, res) => {
+  try {
+    const user = await User.find();
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 //Authentication user and get token
 router.post(
   "/auth",
@@ -83,7 +94,7 @@ router.post(
     if (!errors.isEmpty) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { email, password } = req.body;
+    const { email, password,userType } = req.body;
 
     try {
       //if user exists
@@ -135,7 +146,7 @@ router.post(
     if (!errors.isEmpty) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { username, email, password } = req.body;
+    const { username, email, password,userType } = req.body;
 
     try {
       //if user exists
@@ -149,6 +160,7 @@ router.post(
         username,
         email,
         password,
+        userType
       });
       await user.save();
       res.status(200).json({ errors: [{ msg: "User Registered" }] });

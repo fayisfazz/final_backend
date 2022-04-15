@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const SheduleSchema = mongoose.Schema({
-  eventId:{
-    type: mongoose.Schema.Types.ObjectId,
+  eventName:{
+    type: mongoose.Schema.Types.String,
      ref:"Events"
   },
   sheduleDate: {

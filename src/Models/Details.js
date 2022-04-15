@@ -13,7 +13,7 @@ const DetailsSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  inuagration: {
+  inuaguration: {
     type: String,
     required: true,
   },
@@ -22,13 +22,18 @@ const DetailsSchema = mongoose.Schema({
     required: true,
   },
   totalEvent: {
-    type: Number,
-    required: true,
+    type: String,
+    // required: true,
   },
   noOfDays: {
-    type: Number,
+    type: String,
     required: true,
   },
+  isRegistrationLock:{
+    type: Boolean,
+    default:false,
+    // required:true
+  }
 });
 
 module.exports = mongoose.model("Details", DetailsSchema);

@@ -49,6 +49,10 @@ app.use("/registration", Registration);
 //User Authentication
 app.use("/users", require("./src/Routes/Auth"));
 
+//login
+app.use("/login", require("./src/Routes/User"));
+
+
 //Participants Details
 const ParticipantDetails = require("./src/Routes/ParticipantsDetails");
 app.use("/participantsdetails", ParticipantDetails);

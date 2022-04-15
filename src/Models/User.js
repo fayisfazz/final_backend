@@ -13,6 +13,10 @@ const UserSchema = mongoose.Schema({
   password: {
     type: String,
   },
+  userType:{
+    type:String,
+    default:"student",
+  },
   createdTime: {
     type: Date,
     default: Date.now,

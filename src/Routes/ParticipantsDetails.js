@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 //Get Partcipants names with events list By Id
 router.get("/:id", async (req, res) => {
   try {
-    const eventlist = await UserEventsList
+    const eventlist = await UserEventsList.findById(req.params.id);
     res.json(eventlist);
   } catch (err) {
     res.send("Error" + err);
@@ -25,8 +25,8 @@ router.get("/:id", async (req, res) => {
 //Post a new item or items to eventslist
 router.post("/", async (req, res) => {
   const eventslist = new UserEventsList({
-    candidateId: req.body.candidateId,
-    itemsList: req.body.itemsList,
+    candidateName: req.body.candidateName,
+    itemsList: [req.body.itemsList],
   });
   try {
     const e1 = await eventslist.save();

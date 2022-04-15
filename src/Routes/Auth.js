@@ -81,6 +81,8 @@ router.post(
           type: user.userType,
         },
       };
+
+      //creating token
       jwt.sign(payload, jwtSecret, { expiresIn: "5 days" }, (err, token) => {
         if (err) throw err;
        
@@ -203,10 +205,12 @@ router.patch("/reset",auth, async (req, res) => {
     res.status(404).send({
       message: "new password is not provided",
     });
+
   //encrypting the password using cryptoJs
    //const encryptedPassword = authService.encryptPassword(password);
+
    //updating the password
-   await userService.updateUser(req.body.user.id, {
+   await userService.updateUser(req.body.user.user.id, {
      password: password
    });
 

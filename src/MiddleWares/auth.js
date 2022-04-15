@@ -3,8 +3,12 @@ const jwt = require("jsonwebtoken");
 var jwtSecret = "token"
 
 module.exports = function (req, res, next) {
-    //get the token from header
-    const token = req.header("x-auth-token");
+    //get the token from header frontend
+    
+    const token = req.headers.token;
+
+    //get the token from header postman
+    // const token = req.header("x-auth-token");
 
     //check if there is no token
     if(!token) {
@@ -17,8 +21,6 @@ module.exports = function (req, res, next) {
          //injecting user details to the request
         // req.body = decoded.user;
          req.body.user = decoded;
-    console.log(req.body)
-        //req.user = decoded.user;
         next();
     }catch(err){
          res.send(401).json({msg:"Token is not valid"})

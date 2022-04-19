@@ -26,7 +26,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   const eventslist = new UserEventsList({
     candidateName: req.body.candidateName,
-    itemsList: [req.body.itemsList],
+    itemsList: req.body.itemsList,
   });
   try {
     const e1 = await eventslist.save();

@@ -25,6 +25,16 @@ const MarkEntrySchema = mongoose.Schema({
   thirdDept: {
     type: String,
   },
+  firstPoint:{
+    type:Number,
+    required:true
+  },
+  secondPoint:{
+    type:Number,
+  },
+  thirdPoint:{
+    type:Number,
+  }
 });
 
 module.exports = mongoose.model("MarkEntry", MarkEntrySchema);

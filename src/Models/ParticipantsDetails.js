@@ -4,10 +4,10 @@ const ParticipantsDetails = mongoose.Schema({
   candidateId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "UserRegister",
-    required: true,
+    
   },
   itemsList: {
-    type: [mongoose.Schema.Types.ObjectId],
+    type: [mongoose.Schema.Types.String],
     ref: "Events",
     default: [],
   },

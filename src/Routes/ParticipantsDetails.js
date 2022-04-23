@@ -12,25 +12,28 @@ router.get("/", async (req, res) => {
   }
 });
 
-//Get Partcipants names with events list By Id
-router.get("/:id", async (req, res) => {
-  try {
-    const eventlist = await UserEventsList
-    res.json(eventlist);
-  } catch (err) {
-    res.send("Error" + err);
-  }
-});
+// //Get Partcipants names with events list By Id
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const eventlist = await UserEventsList.findById(req.params.id)
+//     res.json(eventlist);
+//   } catch (err) {
+//     res.send("Error" + err);
+//   }
+// });
 
 //Post a new item or items to eventslist
 router.post("/", async (req, res) => {
+ // console.log(req.body.itemsList);
+
   const eventslist = new UserEventsList({
     candidateId: req.body.candidateId,
     itemsList: req.body.itemsList,
   });
+  console.log(eventslist);
   try {
     const e1 = await eventslist.save();
-    res.json(e1);
+    res.json(e1._id);
   } catch (err) {
     res.send("Error" + err);
   }
@@ -52,7 +55,7 @@ router.delete("/:id", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const eventName = await UserEventsList.findById(req.params.id);
-    res.json(eventlist);
+    res.json(eventName);
   } catch (err) {
     res.send("Error" + err);
   }

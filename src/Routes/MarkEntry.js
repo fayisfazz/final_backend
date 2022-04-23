@@ -2,18 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Results = require("../Models/MarkEntry");
 const DepartmentPoints = require("../Models/DepartmentPoints");
-const Registration = require("../Models/UserRegister");
 //auth utility
 const authService = require("../Services/Auth");
-
-var Department = {
-  BSC: 0,
-  BA: 0,
-  BBA: 0,
-  BCOM: 0,
-  BVOC: 0,
-};
-
 
 
 
@@ -21,24 +11,33 @@ var Department = {
 router.get("/points", async (req, res) => {
   try {
     const results = await Results.find();
+
+    let Department = {
+      BSC: 0,
+      BA: 0,
+      BBA: 0,
+      BCOM: 0,
+      BVOC: 0,
+    };
+
     results.forEach(result => {
       for (const key in Department)
       {
-        if(result.firstDept==key){
-          Department[key] += firstPoint
+        if(key==result.firstDept){
+          Department[key] += result.firstPoint
         }
-        else if(result.secondDept==key){
-          Department[key] += secondPoint
+        else if(key==result.secondDept){
+          Department[key] += result.secondPoint
         }
-        else if(result.thirdPoint==key){
-          Department[key] += thirdPoint
+        else if(key==result.thirdDept){
+          Department[key] += result.thirdPoint
         }else{
           Department[key] += 0
         }
       }
     });
     console.log(Department)
-    res.send(Department)
+    res.send({Department})
   } catch (err) {
     return res.send(err);
   }

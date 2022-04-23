@@ -127,9 +127,9 @@ router.post(
           email: email,
           password: password,
         });
-      await user.save();
+      const data = await user.save();
       // console.log(data);
-      // res.status(200).json(data);
+      res.status(200).json(data);
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Internal Server Error");
@@ -152,16 +152,16 @@ router.post("/forgot", async (req, res) => {
     email,
   };
   //To get User By certain coditions
-  const getUsersBycondition = async (condition) => {
-    const users = await User.find(conditions).select({
-      password: 0,
-      __v: 0,
-      createdTime: 0,
-    });
-    return users;
-  };
+const getUsersBycondition = async (condition) => {
+  const users = await User.find(conditions).select({
+    password: 0,
+    __v: 0,
+    createdTime: 0,
+  });
+  return users;
+};
   //getting all user records
-
+  
   const userData = await getUsersBycondition(conditions);
 
   if (!userData || userData.length !== 1 || userData[0].status == "created")
@@ -176,27 +176,24 @@ router.post("/forgot", async (req, res) => {
   };
 
   //generating user jwt token
-  // const userToken = await authService.createNewToken(userCoreData);
-  jwt.sign(
-    userCoreData,
-    jwtSecret,
-    { expiresIn: "5 days" },
-    (err, userToken) => {
-      if (err) throw err;
+ // const userToken = await authService.createNewToken(userCoreData);
+ jwt.sign(userCoreData, jwtSecret, { expiresIn: "5 days" }, (err, userToken) => {
+  if (err) throw err;
 
-      // sending back the generated token
-      res.status(201).send({
-        message: "user credential are successfully done",
-        data: {
-          userToken,
-        },
-      });
-    }
-  );
+  // sending back the generated token
+  res.status(201).send({
+    message: "user credential are successfully done",
+    data: {
+      userToken,
+    },
+  });
+ 
+ });
 });
 
+
 //reset password
-router.patch("/reset", auth, async (req, res) => {
+router.patch("/reset/:userToken",auth, async (req, res) => {
   const { password } = req.body;
   //password is not provided
   if (!password)
@@ -205,12 +202,12 @@ router.patch("/reset", auth, async (req, res) => {
     });
 
   //encrypting the password using cryptoJs
-  //const encryptedPassword = authService.encryptPassword(password);
+   //const encryptedPassword = authService.encryptPassword(password);
 
-  //updating the password
-  await userService.updateUser(req.body.user.user.id, {
-    password: password,
-  });
+   //updating the password
+   await userService.updateUser(req.body.user.user.id, {
+     password: password
+   });
 
   //sending back the response
   res.status(200).send({ message: "password successfully updated" });

@@ -36,5 +36,4 @@ const MarkEntrySchema = mongoose.Schema({
     type:Number,
   }
 });
-
 module.exports = mongoose.model("MarkEntry", MarkEntrySchema);

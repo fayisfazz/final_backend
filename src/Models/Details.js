@@ -23,7 +23,6 @@ const DetailsSchema = mongoose.Schema({
   },
   totalEvent: {
     type: String,
-    // required: true,
   },
   noOfDays: {
     type: String,
@@ -32,7 +31,6 @@ const DetailsSchema = mongoose.Schema({
   isRegistrationLock:{
     type: Boolean,
     default:false,
-    // required:true
   }
 });
 
